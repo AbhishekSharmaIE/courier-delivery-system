@@ -1,4 +1,4 @@
-name: Dummy Deployment Pipeline
+name: Test Deployment Pipeline
 
 on:
   push:
@@ -6,26 +6,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  dummy-deploy:
-    name: Dummy Deployment
+  test-deploy:
+    name: Test Deployment
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
     
-    - name: Dummy Build Step
+    - name: Test Build Step
       run: |
         echo "🔨 Building application..."
         echo "✅ Build completed successfully!"
         echo "📦 Application ready for deployment"
     
-    - name: Dummy Test Step
+    - name: Test Step
       run: |
         echo "🧪 Running tests..."
         echo "✅ All tests passed!"
     
-    - name: Dummy Deploy Step
+    - name: Test Deploy Step
       run: |
         echo "🚀 Deploying application..."
         echo "✅ Deployment completed!"

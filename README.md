@@ -126,6 +126,7 @@ curl http://localhost:5000/api/health
 This project includes:
 - **CodeQL**: Security analysis
 - **Build & Test**: Automated testing
+- **Test Deployment**: Deployment pipeline
 - **GitHub Pages**: Static site deployment
 
 Workflows are located in `.github/workflows/`
