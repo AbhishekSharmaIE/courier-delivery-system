@@ -6,7 +6,7 @@
 2. ✅ `.gitignore` created (protects sensitive files)
 3. ✅ CI/CD workflows created:
    - `ci-cd.yml` - Main pipeline with CodeQL
-   - `dummy-deploy.yml` - Dummy deployment pipeline
+   - `test-deploy.yml` - Test deployment pipeline
 4. ✅ README.md updated
 5. ✅ All code files staged and committed
 
@@ -69,10 +69,10 @@ These sensitive files are **NOT** pushed to GitHub:
 - Tests application structure
 - Located in: `.github/workflows/ci-cd.yml`
 
-### 3. Dummy Deployment Pipeline
+### 3. Test Deployment Pipeline
 - Simple deployment workflow
 - Shows build, test, and deploy steps
-- Located in: `.github/workflows/dummy-deploy.yml`
+- Located in: `.github/workflows/test-deploy.yml`
 
 ### 4. GitHub Pages Deployment
 - Deploys static UI to GitHub Pages
@@ -101,7 +101,7 @@ courier-delivery-system/
 ├── .github/
 │   └── workflows/
 │       ├── ci-cd.yml          # Main CI/CD with CodeQL
-│       └── dummy-deploy.yml   # Dummy deployment
+│       └── test-deploy.yml   # Test deployment
 ├── static/
 │   └── index.html             # Frontend UI
 ├── app.py                     # Flask application
@@ -151,7 +151,7 @@ ls -la .github/workflows/
 ## 📝 Notes
 
 - All sensitive data is protected by `.gitignore`
-- CI/CD pipelines are dummy/example workflows
+- CI/CD pipelines include test deployment workflows
 - GitHub Pages will host the static UI
 - CodeQL will analyze code for security issues automatically
 
