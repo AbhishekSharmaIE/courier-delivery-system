@@ -1,0 +1,97 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+
+# Flask
+instance/
+.webassets-cache
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+ec2_env.txt
+aws_resources.env
+
+# AWS Credentials
+*.pem
+*.key
+*_key.pem
+*accessKeys.csv
+*access*.txt
+*access*.csv
+abhishek_accessKeys.csv
+aws access key.text
+
+# Credentials and passwords
+*CREDENTIALS.txt
+*_CREDENTIALS.txt
+EC2_CREDENTIALS.txt
+*_passwords.txt
+*_secrets.txt
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+courier.db
+
+# EC2 Instance details
+ec2_instance_id.txt
+ec2_public_ip.txt
+ec2_domain_name.txt
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Deployment
+deploy_package/
+*.tar.gz
+*.zip
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Backup files
+*.bak
+*.backup
+
+EC2_ACCESS_GUIDE.md

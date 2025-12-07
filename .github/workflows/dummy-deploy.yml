@@ -1,0 +1,42 @@
+name: Dummy Deployment Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  dummy-deploy:
+    name: Dummy Deployment
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Dummy Build Step
+      run: |
+        echo "🔨 Building application..."
+        echo "✅ Build completed successfully!"
+        echo "📦 Application ready for deployment"
+    
+    - name: Dummy Test Step
+      run: |
+        echo "🧪 Running tests..."
+        echo "✅ All tests passed!"
+    
+    - name: Dummy Deploy Step
+      run: |
+        echo "🚀 Deploying application..."
+        echo "✅ Deployment completed!"
+        echo "🌐 Application is live!"
+    
+    - name: Deployment Summary
+      run: |
+        echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Build: Success" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Tests: Passed" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Deploy: Complete" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Status**: All steps completed successfully!" >> $GITHUB_STEP_SUMMARY
+

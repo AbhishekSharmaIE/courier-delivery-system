@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courier Delivery System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        small {
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background: #f5f5f5;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background: #e0e0e0;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .package-card {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .package-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .tracking-id {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.assigned {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status.delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .package-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #999;
+        }
+        
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 Courier Delivery System</h1>
+            <p>Manage your packages with ease</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('create')">Create Package</button>
+            <button class="tab" onclick="showTab('track')">Track Package</button>
+            <button class="tab" onclick="showTab('list')">All Packages</button>
+        </div>
+        
+        <!-- Create Package Tab -->
+        <div id="create" class="tab-content active">
+            <h2>Create New Package</h2>
+            <p style="color: #666; margin-bottom: 20px; font-size: 14px;">
+                🇮🇪 Enter Irish addresses with EIRCODE (e.g., "123 Main St, Dublin 2, D02 AF30" or "Cork, T12 XY34")
+            </p>
+            <div id="createAlert" class="alert"></div>
+            <form id="createPackageForm">
+                <div class="form-group">
+                    <label>Pickup Address (with EIRCODE)</label>
+                    <input type="text" id="pickup_address" placeholder="e.g., 15 Grafton Street, Dublin 2, D02 AF30" required>
+                    <small style="color: #666; font-size: 12px;">Include street address and EIRCODE for accurate location</small>
+                </div>
+                <div class="form-group">
+                    <label>Recipient Name</label>
+                    <input type="text" id="recipient_name" required>
+                </div>
+                <div class="form-group">
+                    <label>Recipient Email</label>
+                    <input type="email" id="recipient_email" placeholder="recipient@example.com" required>
+                    <small style="color: #666; font-size: 12px;">Email notifications will be sent to this address</small>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address (with EIRCODE)</label>
+                    <input type="text" id="recipient_address" placeholder="e.g., 25 O'Connell Street, Dublin 1, D01 XY12" required>
+                    <small style="color: #666; font-size: 12px;">Include street address and EIRCODE for accurate location</small>
+                </div>
+                <div class="form-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" step="0.1" id="weight_kg" value="1.0" min="0.1" required>
+                </div>
+                <button type="submit">Create Package</button>
+            </form>
+        </div>
+        
+        <!-- Track Package Tab -->
+        <div id="track" class="tab-content">
+            <h2>Track Package</h2>
+            <div id="trackAlert" class="alert"></div>
+            <div class="form-group">
+                <label>Tracking ID</label>
+                <input type="text" id="tracking_id" placeholder="Enter tracking ID (e.g., TRK6038E881)">
+            </div>
+            <button onclick="trackPackage()">Track Package</button>
+            <div id="trackResult"></div>
+        </div>
+        
+        <!-- List Packages Tab -->
+        <div id="list" class="tab-content">
+            <h2>All Packages</h2>
+            <button onclick="loadPackages()" style="margin-bottom: 20px;">Refresh List</button>
+            <div id="packagesList">
+                <div class="loading">Loading packages...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Load packages when list tab is shown
+            if (tabName === 'list') {
+                loadPackages();
+            }
+        }
+        
+        function showAlert(elementId, message, type) {
+            const alert = document.getElementById(elementId);
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+        
+        document.getElementById('createPackageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitButton = document.querySelector('#create button[type="submit"]');
+            const editId = submitButton.getAttribute('data-edit-id');
+            
+            const data = {
+                recipient_name: document.getElementById('recipient_name').value,
+                recipient_email: document.getElementById('recipient_email').value,
+                recipient_address: document.getElementById('recipient_address').value,
+                pickup_address: document.getElementById('pickup_address').value,
+                weight_kg: parseFloat(document.getElementById('weight_kg').value)
+            };
+            
+            try {
+                let response;
+                if (editId) {
+                    // Update existing package
+                    response = await fetch(`${API_BASE}/packages/${editId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                } else {
+                    // Create new package
+                    response = await fetch(`${API_BASE}/packages`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                }
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    if (editId) {
+                        showAlert('createAlert', 
+                            `Package updated! Distance: ${result.distance_km}km, Price: €${result.price}`, 
+                            'success');
+                        submitButton.removeAttribute('data-edit-id');
+                        document.querySelector('#create h2').textContent = 'Create New Package';
+                        submitButton.textContent = 'Create Package';
+                    } else {
+                        showAlert('createAlert', 
+                            `Package created! Tracking ID: ${result.tracking_id}, Distance: ${result.distance_km}km, Price: €${result.estimated_price}${result.email_sent ? ' (Email sent!)' : ''}`, 
+                            'success');
+                    }
+                    document.getElementById('createPackageForm').reset();
+                    loadPackages();
+                } else {
+                    showAlert('createAlert', result.error || 'Failed to process package', 'error');
+                }
+            } catch (error) {
+                showAlert('createAlert', 'Error: ' + error.message, 'error');
+            }
+        });
+        
+        async function trackPackage() {
+            const trackingId = document.getElementById('tracking_id').value.trim();
+            if (!trackingId) {
+                showAlert('trackAlert', 'Please enter a tracking ID', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/packages/${trackingId}`);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displayPackage(result, 'trackResult');
+                    showAlert('trackAlert', 'Package found!', 'success');
+                } else {
+                    showAlert('trackAlert', result.error || 'Package not found', 'error');
+                    document.getElementById('trackResult').innerHTML = '';
+                }
+            } catch (error) {
+                showAlert('trackAlert', 'Error: ' + error.message, 'error');
+            }
+        }
+        
+        async function loadPackages() {
+            const listDiv = document.getElementById('packagesList');
+            listDiv.innerHTML = '<div class="loading">Loading packages...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/packages`);
+                const packages = await response.json();
+                
+                if (packages.length === 0) {
+                    listDiv.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No packages found</p></div>';
+                    return;
+                }
+                
+                listDiv.innerHTML = packages.map(pkg => createPackageCard(pkg)).join('');
+            } catch (error) {
+                listDiv.innerHTML = `<div class="alert error">Error loading packages: ${error.message}</div>`;
+            }
+        }
+        
+        function createPackageCard(pkg) {
+            const statusClass = (pkg.status || 'pending').toLowerCase();
+            return `
+                <div class="package-card" id="package-${pkg.id}">
+                    <div class="package-header">
+                        <span class="tracking-id">${pkg.tracking_id || 'N/A'}</span>
+                        <span class="status ${statusClass}">${pkg.status || 'pending'}</span>
+                    </div>
+                    <div class="package-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Recipient</span>
+                            <span class="detail-value">${pkg.recipient_name || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Email</span>
+                            <span class="detail-value">${pkg.recipient_email || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Distance</span>
+                            <span class="detail-value">${pkg.distance || 0} km</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Price</span>
+                            <span class="detail-value">€${pkg.price || 0}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Created</span>
+                            <span class="detail-value">${pkg.created_at ? new Date(pkg.created_at).toLocaleDateString() : 'N/A'}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button onclick="editPackage('${pkg.id}')" style="background: #28a745; padding: 8px 15px; font-size: 14px;">Edit</button>
+                        <button onclick="deletePackage('${pkg.id}', '${pkg.tracking_id}')" style="background: #dc3545; padding: 8px 15px; font-size: 14px;">Delete</button>
+                        <button onclick="updateStatus('${pkg.id}')" style="background: #17a2b8; padding: 8px 15px; font-size: 14px;">Update Status</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        async function editPackage(packageId) {
+            try {
+                const response = await fetch(`${API_BASE}/packages/id/${packageId}`);
+                const pkg = await response.json();
+                
+                if (response.ok) {
+                    // Populate form with package data
+                    document.getElementById('recipient_name').value = pkg.recipient_name || '';
+                    document.getElementById('recipient_email').value = pkg.recipient_email || '';
+                    document.getElementById('recipient_address').value = pkg.recipient_address || '';
+                    document.getElementById('pickup_address').value = pkg.pickup_address || '';
+                    document.getElementById('weight_kg').value = 1.0;
+                    
+                    // Switch to create tab and show edit mode
+                    showTab('create');
+                    document.querySelector('#create h2').textContent = 'Edit Package';
+                    document.querySelector('#create button[type="submit"]').textContent = 'Update Package';
+                    document.querySelector('#create button[type="submit"]').setAttribute('data-edit-id', packageId);
+                    
+                    showAlert('createAlert', `Editing package ${pkg.tracking_id}`, 'success');
+                } else {
+                    showAlert('createAlert', 'Failed to load package', 'error');
+                }
+            } catch (error) {
+                showAlert('createAlert', 'Error: ' + error.message, 'error');
+            }
+        }
+        
+        async function deletePackage(packageId, trackingId) {
+            if (!confirm(`Are you sure you want to delete package ${trackingId}?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/packages/${packageId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showAlert('createAlert', `Package ${trackingId} deleted successfully`, 'success');
+                    loadPackages();
+                } else {
+                    showAlert('createAlert', result.error || 'Failed to delete package', 'error');
+                }
+            } catch (error) {
+                showAlert('createAlert', 'Error: ' + error.message, 'error');
+            }
+        }
+        
+        async function updateStatus(packageId) {
+            const statuses = ['pending', 'assigned', 'in_transit', 'out_for_delivery', 'delivered', 'cancelled'];
+            const currentStatus = prompt(`Enter new status:\nAvailable: ${statuses.join(', ')}`);
+            
+            if (!currentStatus || !statuses.includes(currentStatus.toLowerCase())) {
+                showAlert('createAlert', 'Invalid status', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/packages/${packageId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: currentStatus.toLowerCase() })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showAlert('createAlert', `Status updated to ${currentStatus}`, 'success');
+                    loadPackages();
+                } else {
+                    showAlert('createAlert', result.error || 'Failed to update status', 'error');
+                }
+            } catch (error) {
+                showAlert('createAlert', 'Error: ' + error.message, 'error');
+            }
+        }
+        
+        function displayPackage(pkg, elementId) {
+            document.getElementById(elementId).innerHTML = createPackageCard(pkg);
+        }
+        
+        // Load packages on page load
+        window.addEventListener('load', () => {
+            loadPackages();
+        });
+    </script>
+</body>
+</html>
+
